@@ -1,3 +1,5 @@
+#include "uart.h"
+
 /* setup */
 void setup(){
 
