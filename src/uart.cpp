@@ -42,7 +42,7 @@ void do_uart(UARTClass *uart) {
     if( is_first_connected ){
       is_first_connected = false;
       clear_uart(&OUT_UART);
-      OUT_UART.print("\Connected\r");
+      OUT_UART.print("\rConnected\r");
     }
     static char inc_byte = 0;
     if( inc_byte != EOT ) {
