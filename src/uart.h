@@ -2,7 +2,7 @@
 #define UART_H
 
 /* Arduino header */
-#include <Arduino.h>
+#include "Arduino.h"
 
 /* UART defines */
 #define OUT_UART Serial
@@ -45,13 +45,15 @@ const String uart_usage_msg = "\rUSAGE :\r\
 #define CMD_ERR 100
 #define CMD_NULL 200
 
-/* UART functions */;
+/* UART functions */
 void clear_uart(UARTClass *uart);
-bool uart_init();
 void uart_usage();
+bool uart_init();
+bool uart_connect( UARTClass *uart, uint32_t speed,  UARTClass::UARTModes config );
 void do_uart(UARTClass *uart);
 uint8_t get_cmd(String x);
 String read_uart_command();
 uint8_t get_uart_status();
+void do_uart_command(uint8_t cmd);
 
 #endif
