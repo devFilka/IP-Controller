@@ -3,12 +3,12 @@
 
 static bool is_relay_on;
 
-void switch_realy_on() {
+void switch_relay_on() {
   pinMode( SWITCH_RELAY, OUTPUT );
   digitalWrite( SWITCH_RELAY, HIGH );
   is_relay_on = true;
 }
-void switch_realy_off() {
+void switch_relay_off() {
   pinMode( SWITCH_RELAY, OUTPUT );
   digitalWrite( SWITCH_RELAY, LOW );
   is_relay_on = false;
@@ -17,23 +17,23 @@ bool switch_reset(uint32_t reset_delay){
   static uint32_t time = millis();
   if( !is_relay_on ) {
     if( is_time_end( reset_delay, time, millis()) ) {
-      switch_realy_on();
+      switch_relay_on();
       time = millis();
       return true;
     }
     else {
-      switch_realy_off();
+      switch_relay_off();
       return false;
     }
   }
   else {
     if( is_time_end( reset_delay, time, millis()) ) {
-      switch_realy_on();
+      switch_relay_on();
       time = millis();
       return true;
     }
     else {
-      switch_realy_off();
+      switch_relay_off();
       return false;
     }
   }

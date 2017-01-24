@@ -18,8 +18,8 @@
 #define SWITCH_HZ 100
 
 /* Switch functions */
-void switch_realy_on();
-void switch_realy_off();
+void switch_relay_on();
+void switch_relay_off();
 bool switch_reset(uint32_t reset_delay);
 
 uint8_t get_switch_status(bool is_need_on);
