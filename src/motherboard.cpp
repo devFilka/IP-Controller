@@ -36,10 +36,20 @@ void press_mb_btn(uint32_t press_ms, uint32_t wait_ms){
 }
 
 void mb_power_on(){
-  press_mb_btn(500, 5000);
+  if( !is_mb_led() ) {
+    press_mb_btn(500, 5000);
+  }
+  else {
+    mb_btn_up();
+  }
 }
 void mb_power_off(){
-  press_mb_btn(1500, 20000);
+  if( is_mb_led() ) {
+    press_mb_btn(1500, 20000);
+  }
+  else {
+    mb_btn_up();
+  }
 }
 void mb_halt(){
   if( is_mb_led() ) {
