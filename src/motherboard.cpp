@@ -1,7 +1,7 @@
 #include "time.h"
 #include "motherboard.h"
 
-bool is_btn_pressed;
+static bool is_btn_pressed;
 
 void mb_btn_up() {
   pinMode( MB_BTN, OUTPUT );
