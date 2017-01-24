@@ -94,7 +94,7 @@ uint8_t get_nas_status(bool is_need_on){
       }
       break;
     case NAS_TURNS_ON:
-      if ( is_time_end( TURNS_ON_ERR_TIME, time, millis()) ) {
+      if ( is_time_end( NAS_TURNS_ON_ERR_TIME, time, millis()) ) {
         nas_state = NAS_TURNS_ON_ERR;
       }
       if( is_nas_led() ) {
@@ -102,7 +102,7 @@ uint8_t get_nas_status(bool is_need_on){
       }
       break;
     case NAS_TURNS_OFF:
-      if( is_time_end( TURNS_OFF_ERR_TIME, time, millis()) ) {
+      if( is_time_end( NAS_TURNS_OFF_ERR_TIME, time, millis()) ) {
         nas_state = NAS_TURNS_OFF_ERR;
       }
       if( !is_nas_led() ) {

@@ -9,8 +9,8 @@
 #define MB_LED 24
 
 /* Motherboard constants */
-#define TURNS_ON_ERR_TIME 10000
-#define TURNS_OFF_ERR_TIME 50000
+#define MB_TURNS_ON_ERR_TIME 10000
+#define MB_TURNS_OFF_ERR_TIME 50000
 
 #define MB_ON_PRESS_BTN_DURATION 500
 #define MB_ON_WAIT_BTN_DURATION 5000

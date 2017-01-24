@@ -94,7 +94,7 @@ uint8_t get_mb_status(bool is_need_on){
       }
       break;
     case MB_TURNS_ON:
-      if ( is_time_end( TURNS_ON_ERR_TIME, time, millis()) ) {
+      if ( is_time_end( MB_TURNS_ON_ERR_TIME, time, millis()) ) {
         mb_state = MB_TURNS_ON_ERR;
       }
       if( is_mb_led() ) {
@@ -102,7 +102,7 @@ uint8_t get_mb_status(bool is_need_on){
       }
       break;
     case MB_TURNS_OFF:
-      if( is_time_end( TURNS_OFF_ERR_TIME, time, millis()) ) {
+      if( is_time_end( MB_TURNS_OFF_ERR_TIME, time, millis()) ) {
         mb_state = MB_TURNS_OFF_ERR;
       }
       if( !is_mb_led() ) {
