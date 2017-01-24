@@ -16,10 +16,10 @@
 #define CONTROLLER_HZ 100
 
 /*  Controller error states*/
-#define CONTROLLER_NO_ERROR 0b00000000
-#define CONTROLLER_MB_ERROR 0b00000001
-#define CONTROLLER_SWITCH_ERROR 0b00000010
-#define CONTROLLER_NAS_ERROR 0b00000100
+#define CONTROLLER_NO_ERROR 0
+#define CONTROLLER_MB_ERROR 1
+#define CONTROLLER_SWITCH_ERROR 2
+#define CONTROLLER_NAS_ERROR 4
 
 /* Controller functions */;
 void controller_on();
