@@ -37,7 +37,7 @@ void press_mb_btn(uint32_t press_ms, uint32_t wait_ms){
 
 void mb_power_on(){
   if( !is_mb_led() ) {
-    press_mb_btn(500, 5000);
+    press_mb_btn(MB_ON_PRESS_BTN_DURATION, MB_ON_WAIT_BTN_DURATION);
   }
   else {
     mb_btn_up();
@@ -45,7 +45,7 @@ void mb_power_on(){
 }
 void mb_power_off(){
   if( is_mb_led() ) {
-    press_mb_btn(1500, 20000);
+    press_mb_btn(MB_OFF_PRESS_BTN_DURATION, MB_OFF_WAIT_BTN_DURATION);
   }
   else {
     mb_btn_up();

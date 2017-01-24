@@ -12,6 +12,12 @@
 #define TURNS_ON_ERR_TIME 10000
 #define TURNS_OFF_ERR_TIME 50000
 
+#define MB_ON_PRESS_BTN_DURATION 500
+#define MB_ON_WAIT_BTN_DURATION 5000
+
+#define MB_OFF_PRESS_BTN_DURATION 1500
+#define MB_OFF_WAIT_BTN_DURATION 20000
+
 /* Motherboard commands */
 #define MB_START 0
 #define MB_ON 1
