@@ -41,6 +41,14 @@ void mb_power_on(){
 void mb_power_off(){
   press_btn(1500, 20000);
 }
+void mb_halt(){
+  if( is_mb_led() ) {
+    mb_btn_down();
+  }
+  else {
+    mb_btn_up();
+  }
+}
 
 bool is_mb_led() {
   static bool mb_led;

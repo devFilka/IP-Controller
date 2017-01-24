@@ -28,6 +28,7 @@ void mb_btn_down();
 void press_btn(uint32_t press_ms, uint32_t wait_ms);
 void mb_power_on();
 void mb_power_off();
+void mb_halt();
 bool is_mb_led();
 uint8_t get_mb_status(bool is_need_on);
 
