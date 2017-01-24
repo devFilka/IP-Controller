@@ -13,7 +13,7 @@ void mb_btn_down() {
   digitalWrite( MB_BTN, LOW );
   is_btn_pressed = true;
 }
-void press_btn(uint32_t press_ms, uint32_t wait_ms){
+void press_mb_btn(uint32_t press_ms, uint32_t wait_ms){
   static uint32_t time = millis();
   if( is_btn_pressed ) {
     if( is_time_end( press_ms, time, millis()) ) {
@@ -36,10 +36,10 @@ void press_btn(uint32_t press_ms, uint32_t wait_ms){
 }
 
 void mb_power_on(){
-  press_btn(500, 5000);
+  press_mb_btn(500, 5000);
 }
 void mb_power_off(){
-  press_btn(1500, 20000);
+  press_mb_btn(1500, 20000);
 }
 void mb_halt(){
   if( is_mb_led() ) {

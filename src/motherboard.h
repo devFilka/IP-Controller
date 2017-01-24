@@ -25,7 +25,7 @@
 /* Motherboard functions */
 void mb_btn_up();
 void mb_btn_down();
-void press_btn(uint32_t press_ms, uint32_t wait_ms);
+void press_mb_btn(uint32_t press_ms, uint32_t wait_ms);
 void mb_power_on();
 void mb_power_off();
 void mb_halt();
