@@ -5,8 +5,8 @@
 #include "Arduino.h"
 
 /* Motherboard defines */
-#define NAS_BTN 23
-#define NAS_LED 24
+#define NAS_BTN 42
+#define NAS_LED 71
 
 /* Motherboard constants */
 #define TURNS_ON_ERR_TIME 10000
