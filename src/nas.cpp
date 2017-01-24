@@ -37,7 +37,7 @@ void press_nas_btn(uint32_t press_ms, uint32_t wait_ms){
 
 void nas_power_on(){
   if( !is_nas_led() ){
-    press_nas_btn(1500, 70000);
+    press_nas_btn(NAS_ON_PRESS_BTN_DURATION, NAS_ON_WAIT_BTN_DURATION);
   }
   else {
     nas_btn_up();
@@ -45,7 +45,7 @@ void nas_power_on(){
 }
 void nas_power_off(){
     if( is_nas_led() ){
-      press_nas_btn(5000, 40000);
+      press_nas_btn(NAS_OFF_PRESS_BTN_DURATION, NAS_OFF_WAIT_BTN_DURATION);
     }
     else {
       nas_btn_up();
