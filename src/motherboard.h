@@ -18,7 +18,7 @@
 #define MB_OFF_PRESS_BTN_DURATION 4000
 #define MB_OFF_WAIT_BTN_DURATION 55000
 
-/* Motherboard commands */
+/* Motherboard states */
 #define MB_START 0
 #define MB_ON 1
 #define MB_OFF 2
