@@ -1,9 +1,5 @@
 #include "controller.h"
 
-#include "motherboard.h"
-#include "switch.h"
-#include "nas.h"
-
 static bool is_need_on;
 
 void controller_on(){

@@ -1,4 +1,3 @@
-#include "time.h"
 #include "switch.h"
 
 static bool is_relay_on;

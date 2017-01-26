@@ -4,6 +4,9 @@
 /* Arduino header */
 #include "Arduino.h"
 
+/* includes */
+#include "time.h"
+
 /* Switch defines */
 #define SWITCH_RELAY 49
 //#define SWITCH_LED 43

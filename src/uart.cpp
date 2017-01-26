@@ -1,5 +1,4 @@
 #include "uart.h"
-#include "ascii.h"
 
 void clear_uart(UARTClass *uart) {
   uart->write(ESC);   // ESC

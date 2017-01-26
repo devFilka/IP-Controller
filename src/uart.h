@@ -4,6 +4,9 @@
 /* Arduino header */
 #include "Arduino.h"
 
+/* includes */
+#include "ascii.h"
+
 /* UART defines */
 #define OUT_UART Serial
 #define NAS_UART Serial1

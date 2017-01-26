@@ -4,6 +4,9 @@
 /* Arduino header */
 #include "Arduino.h"
 
+/* includes */
+#include "time.h"
+
 /* NAS defines */
 #define NAS_BTN 42
 #define NAS_LED 71

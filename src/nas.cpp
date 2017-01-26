@@ -1,4 +1,3 @@
-#include "time.h"
 #include "nas.h"
 
 static bool is_btn_pressed;
