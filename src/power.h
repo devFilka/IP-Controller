@@ -5,6 +5,8 @@
 #include "Arduino.h"
 
 /* Power defines */
+#define BATTERY_POWER_PIN  46
+
 
 /* Power constants */
 
