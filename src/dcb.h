@@ -35,16 +35,55 @@
 #define RED_COLOR    2
 #define ORANGE_COLOR 3
 
-/* blink constants */
-#define BLINK_BIT_DURATION 125
-#define BLINK_SOME 0b11001010
-
 /* MSG constatns */
 #define MSG_STACK_SIZE 16
 #define MSG_LEN 4
 #define MSG_BIT_DURATION 500
 #define MSG_BIT0_DURATION 100
 #define MSG_BIT1_DURATION 400
-#define MSG_DELAY 2000
+#define MSG_DELAY_DURATION 2000
+
+/* MSG states */
+#define MSG_STATE_START 0
+#define MSG_STATE_READ_MSG 1
+#define MSG_STATE_READ_BIT 2
+#define MSG_STATE_0 3
+#define MSG_STATE_1 4
+#define MSG_STATE_END_BIT 5
+#define MSG_STATE_DELAY 6
+
+/* led struct */
+struct Led {
+  const uint8_t green_pin;
+  const uint8_t red_pin;
+  uint8_t state;
+  uint8_t msg_state;
+  uint32_t time_counter;
+  uint8_t color;
+  uint8_t msg_stack[MSG_STACK_SIZE];
+  uint8_t cur_msg;
+  uint8_t cur_msg_bit;
+  uint8_t write_point;
+  uint8_t read_point;
+};
+
+/* led functions */
+void setup_dcb();
+void led_off(Led *led);
+void led_on(Led *led);
+void add_msg(Led *led, uint8_t msg);
+void clear_msg_stack(Led *led);
+void led_show_msg(Led *led);
+
+/* button constatns */
+#define BTN_STACK_SIZE 100
+
+/* button struct */
+struct Button {
+  const uint8_t btn_pin;
+  bool btn_stack[BTN_STACK_SIZE];
+  uint8_t btn_point;
+};
+bool is_button_pressed(Button *btn);
 
 #endif
