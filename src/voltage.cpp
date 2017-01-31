@@ -25,7 +25,7 @@ bool is_start_voltage(){
   return false;
 }
 bool is_stop_voltage(){
-  if ( ( current_voltage < V_HALT_MAX ) && ( current_voltage > V_HALT_MIN ) ) {
+  if ( ( current_voltage > V_HALT_MAX ) || ( current_voltage < V_HALT_MIN ) ) {
     return true;
   }
   return false;
@@ -83,7 +83,7 @@ void get_voltage_res(){
       ch2 = spi_buffer & (CH_MASK);
       SPI_RES =  ch2-ch1;
       if( SPI_RES > 16060) { SPI_RES = 16060; }
-      if( SPI_RES < 1460)  { SPI_RES = 1460;  }  
+      if( SPI_RES < 1460)  { SPI_RES = 1460;  }
       current_voltage = fir( (16450 - SPI_RES) / 73 );
       spi_buffer = 0;
     }
