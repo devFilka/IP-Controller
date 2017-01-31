@@ -147,6 +147,22 @@ void led_show_msg(Led *led){
       break;
   }
 }
+void do_led(Led *led){
+  switch(led->state){
+    case LED_STATE_START:
+    case LED_STATE_OFF:
+      led_off(led);
+      break;
+    case LED_STATE_ON:
+      led_on(led);
+      break;
+    case LED_STATE_SHOW_MSG:
+      led_show_msg(led);
+      break;
+    default:
+      break;
+  }
+}
 
 /* button functions */
 bool is_button_pressed(Button *btn){

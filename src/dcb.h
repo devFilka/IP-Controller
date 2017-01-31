@@ -26,8 +26,7 @@
 #define LED_STATE_START 0
 #define LED_STATE_OFF 1
 #define LED_STATE_ON 2
-#define LED_STATE_BLINK 3
-#define LED_STATE_SHOW_MSG 4
+#define LED_STATE_SHOW_MSG 3
 
 /* led color */
 #define NO_COLOR     0
@@ -74,6 +73,7 @@ void led_on(Led *led);
 void add_msg(Led *led, uint8_t msg);
 void clear_msg_stack(Led *led);
 void led_show_msg(Led *led);
+void do_led(Led *led);
 
 /* button constatns */
 #define BTN_STACK_SIZE 100
