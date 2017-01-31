@@ -5,8 +5,8 @@
 #include "Arduino.h"
 
 /* Motherboard defines */
-#define MB_BTN 23
-#define MB_LED 24
+#define MB_BTN 24
+#define MB_LED 23
 
 /* Motherboard constants */
 #define MB_TURNS_ON_ERR_TIME 20000
