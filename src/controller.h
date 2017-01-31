@@ -27,8 +27,10 @@
 #define CONTROLLER_NAS_ERROR 4
 
 /* Controller functions */;
+bool is_need_on_state();
 void controller_on();
 void controller_off();
 uint8_t get_controller_status();
+void do_controller();
 
 #endif
