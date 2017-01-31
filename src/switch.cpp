@@ -50,6 +50,7 @@ uint8_t get_switch_status(bool is_need_on){
       else {
         switch_state = SWITCH_OFF;
       }
+      break;
     default:
       switch_state = SWITCH_HZ;
       break;
