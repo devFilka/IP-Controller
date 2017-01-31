@@ -84,6 +84,8 @@ struct Button {
   bool btn_stack[BTN_STACK_SIZE];
   uint8_t btn_point;
 };
+
+/* button functions */
 bool is_button_pressed(Button *btn);
 
 #endif
