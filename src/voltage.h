@@ -10,7 +10,7 @@
 #define CONV_PIN 47
 
 /* SPI constants */
-#define SPI_FREQ 1
+#define SPI_FREQ 5
 #define CH_MASK 0x3FFF
 #define FIR_STACK_SIZE 10
 

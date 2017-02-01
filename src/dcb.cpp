@@ -172,14 +172,10 @@ bool is_button_pressed(Button *btn){
     btn->btn_point = 0;
   }
   uint8_t i;
-  bool state;
+  bool state = true;
   for ( i = 0; i < BTN_STACK_SIZE; i++ ){
-    if( btn->btn_stack[i] ) {
-      state = true;
-    }
-    else {
+    if( !btn->btn_stack[i] ) {
       state = false;
-      break;
     }
   }
   return state;
