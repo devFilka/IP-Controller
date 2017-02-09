@@ -3,6 +3,8 @@
 PCF8574 DCB;
 
 /* WTF? WHY THIS NOT FOUND IN time.h? */
+#define MAX_MILLIS 4294967295
+
 bool is_time_end(uint32_t t, uint32_t begin, uint32_t end) {
   if( end >= begin ){
     if( (end-begin) >= t ){
@@ -82,17 +84,22 @@ void clear_msg_stack(Led *led){
     led->msg_stack[i] = 0xff;
   }
 }
+bool is_stack_clear(Led *led){
+  uint8_t i;
+  for ( i = 0; i < MSG_STACK_SIZE; i++ ){
+    if( led->msg_stack[i] != 0xff ){
+      return false;
+    }
+  }
+  return true;
+}
+
 void led_show_msg(Led *led){
   switch ( led->msg_state ) {
     case MSG_STATE_START:
     case MSG_STATE_READ_MSG:
       if( led->msg_stack[led->read_point] != 0xff ){
         led->cur_msg = led->msg_stack[led->read_point];
-        led->msg_stack[led->read_point] = 0xff;
-        led->read_point ++;
-        if( led->read_point == MSG_STACK_SIZE ) {
-          led->read_point = 0;
-        }
         led->cur_msg_bit = 0;
         led->msg_state = MSG_STATE_READ_BIT;
       }
@@ -139,6 +146,11 @@ void led_show_msg(Led *led){
     case MSG_STATE_DELAY:
       if( is_time_end(MSG_DELAY_DURATION, led->time_counter, millis()) ) {
         led->msg_state = MSG_STATE_READ_MSG;
+        led->msg_stack[led->read_point] = 0xff;
+        led->read_point ++;
+        if( led->read_point == MSG_STACK_SIZE ) {
+          led->read_point = 0;
+        }
       }
       else {
         break;
