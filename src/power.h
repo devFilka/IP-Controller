@@ -17,5 +17,6 @@ void battery_off();
 void battery_on();
 void power_off();
 void power_on();
+bool is_power_all();
 
 #endif
