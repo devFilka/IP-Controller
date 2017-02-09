@@ -5,7 +5,7 @@
 #include "Arduino.h"
 
 /* includes */
-#include "time.h"
+//#include "time.h"
 #include <Wire.h>
 #include "../lib/PCF8574/PCF8574.h"
 
@@ -73,6 +73,7 @@ void led_off(Led *led);
 void led_on(Led *led);
 void add_msg(Led *led, uint8_t msg);
 void clear_msg_stack(Led *led);
+bool is_stack_clear(Led *led);
 void led_show_msg(Led *led);
 void do_led(Led *led);
 
