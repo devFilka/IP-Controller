@@ -17,8 +17,8 @@
 /* Voltage constants */
 #define V_START_MIN 75
 #define V_START_MAX 150
-#define V_HALT_MIN 70
-#define V_HALT_MAX 155
+#define V_HALT_MIN 74
+#define V_HALT_MAX 151
 
 /* Voltage functions */
 uint32_t get_current_voltage_res();

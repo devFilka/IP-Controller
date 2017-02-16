@@ -14,7 +14,7 @@ void setup_spi() {
 bool is_start_voltage(){
   static uint32_t time_counter = millis();
   if ( ( current_voltage < V_START_MAX ) && ( current_voltage > V_START_MIN ) ) {
-    if( is_time_end(2000, time_counter, millis()) ){
+    if( is_time_end(5000, time_counter, millis()) ){
       return true;
     }
     else {
