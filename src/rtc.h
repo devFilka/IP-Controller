@@ -33,6 +33,7 @@ bool is_time_ok();
 /* Flash functions */
 TIME read_halt_time(uint32_t address);
 void write_halt_time(TIME halt, uint32_t address);
+void write_halt_time();
 void flash_setup(TIME cur_time);
 
 #endif

@@ -79,7 +79,6 @@ bool is_time_ok(){
   }
 
   read_cur_time();
-  read_halt_time(4);
 
   if( cur_time.tm.Year - halt_time.tm.Year > 0 ){
     return true;
@@ -127,9 +126,15 @@ TIME read_halt_time(uint32_t address){
   return halt;
 }
 void write_halt_time(TIME halt, uint32_t address) {
+  halt_time = halt;
   byte b2[sizeof(TIME)]; // create byte array to store the struct
   memcpy(b2, &halt, sizeof(TIME)); // copy the struct to the byte array
   dueFlashStorage.write(address, b2, sizeof(TIME)); // write byte array to flash
+}
+void write_halt_time(){
+  read_cur_time();
+  halt_time = cur_time;
+  write_halt_time(halt_time, 4);
 }
 void flash_setup(TIME cur_time){
   TIME halt;
