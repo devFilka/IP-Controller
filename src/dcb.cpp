@@ -93,7 +93,6 @@ bool is_stack_clear(Led *led){
   }
   return true;
 }
-
 void led_show_msg(Led *led){
   switch ( led->msg_state ) {
     case MSG_STATE_START:
@@ -159,6 +158,62 @@ void led_show_msg(Led *led){
       break;
   }
 }
+void led_blink(Led *led){
+  switch ( led->blink_state ) {
+    case BLINK_STATE_START:
+      led->time_counter = millis();
+      led->blink_state = BLINK_STATE_BLINK;
+    case BLINK_STATE_BLINK:
+      if( is_time_end(led->blink_ms, led->time_counter, millis()) ){
+        led->time_counter = millis();
+        led->blink_state = BLINK_STATE_WAIT;
+        led_off(led);
+      }
+      else {
+        led_on(led);
+        break;
+      }
+    case BLINK_STATE_WAIT:
+      if( is_time_end(led->blink_wait_ms, led->time_counter, millis()) ){
+        led->time_counter = millis();
+        led->blink_state = BLINK_STATE_BLINK;
+      }
+      break;
+      /*
+      else {
+        led_off(led);
+        break;
+      }
+      */
+    default:
+      break;
+
+  }
+}
+void led_blink_one(Led *led){
+  switch ( led->blink_state ) {
+    case BLINK_STATE_START:
+      led->time_counter = millis();
+      led->blink_state = BLINK_STATE_BLINK;
+    case BLINK_STATE_BLINK:
+      if( is_time_end(led->blink_ms, led->time_counter, millis()) ){
+        led->time_counter = millis();
+        led->blink_state = BLINK_STATE_WAIT;
+        led_off(led);
+      }
+      else {
+        led_on(led);
+        break;
+      }
+    case BLINK_STATE_WAIT:
+      led->state = LED_STATE_PAUSE;
+      led->blink_state = BLINK_STATE_BLINK;
+    default:
+      break;
+
+  }
+}
+
 void do_led(Led *led){
   switch(led->state){
     case LED_STATE_START:
@@ -170,6 +225,14 @@ void do_led(Led *led){
       break;
     case LED_STATE_SHOW_MSG:
       led_show_msg(led);
+      break;
+    case LED_STATE_BLINK:
+      led_blink(led);
+      break;
+    case LED_STATE_BLINK_ONE:
+      led_blink_one(led);
+      break;
+    case LED_STATE_PAUSE:
       break;
     default:
       break;

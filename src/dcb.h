@@ -28,6 +28,9 @@
 #define LED_STATE_OFF 1
 #define LED_STATE_ON 2
 #define LED_STATE_SHOW_MSG 3
+#define LED_STATE_BLINK 4
+#define LED_STATE_BLINK_ONE 5
+#define LED_STATE_PAUSE 6
 
 /* led color */
 #define NO_COLOR     0
@@ -52,6 +55,11 @@
 #define MSG_STATE_END_BIT 5
 #define MSG_STATE_DELAY 6
 
+/* blink states */
+#define BLINK_STATE_START 0
+#define BLINK_STATE_BLINK 1
+#define BLINK_STATE_WAIT 2
+
 /* led struct */
 struct Led {
   const uint8_t green_pin;
@@ -65,6 +73,9 @@ struct Led {
   uint8_t cur_msg_bit;
   uint8_t write_point;
   uint8_t read_point;
+  uint8_t blink_state;
+  uint32_t blink_ms;
+  uint32_t blink_wait_ms;
 };
 
 /* led functions */
@@ -75,10 +86,12 @@ void add_msg(Led *led, uint8_t msg);
 void clear_msg_stack(Led *led);
 bool is_stack_clear(Led *led);
 void led_show_msg(Led *led);
+void led_blink(Led *led);
+void led_blink_one(Led *led);
 void do_led(Led *led);
 
 /* button constatns */
-#define BTN_STACK_SIZE 100
+#define BTN_STACK_SIZE 50
 
 /* button struct */
 struct Button {
