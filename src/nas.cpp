@@ -68,7 +68,8 @@ bool is_nas_led() {
 
 uint8_t get_nas_status(bool is_need_on){
   static uint8_t nas_state = NAS_START;
-  static uint32_t time = millis();
+  static uint32_t turns_time_counter = millis();
+  static uint32_t err_time_counter = millis();
   switch (nas_state) {
     case NAS_START:
     case NAS_ON:
@@ -78,13 +79,13 @@ uint8_t get_nas_status(bool is_need_on){
           nas_state = NAS_ON;
         }
         else {
-          time = millis();
+          err_time_counter = millis();
           nas_state = NAS_TURNS_OFF;
         }
       }
       else {
         if( is_need_on ) {
-          time = millis();
+          err_time_counter = millis();
           nas_state = NAS_TURNS_ON;
         }
         else {
@@ -93,19 +94,29 @@ uint8_t get_nas_status(bool is_need_on){
       }
       break;
     case NAS_TURNS_ON:
-      if ( is_time_end( NAS_TURNS_ON_ERR_TIME, time, millis()) ) {
+      if ( is_time_end( NAS_TURNS_ON_ERR_TIME, err_time_counter, millis()) ) {
         nas_state = NAS_TURNS_ON_ERR;
       }
       if( is_nas_led() ) {
-        nas_state = NAS_ON;
+        if ( is_time_end( 5000, turns_time_counter, millis()) ) {
+          nas_state = NAS_ON;
+        }
+      }
+      else {
+        turns_time_counter = millis();
       }
       break;
     case NAS_TURNS_OFF:
-      if( is_time_end( NAS_TURNS_OFF_ERR_TIME, time, millis()) ) {
+      if( is_time_end( NAS_TURNS_OFF_ERR_TIME, err_time_counter, millis()) ) {
         nas_state = NAS_TURNS_OFF_ERR;
       }
       if( !is_nas_led() ) {
-        nas_state = NAS_OFF;
+        if ( is_time_end( 5000, turns_time_counter, millis()) ) {
+          nas_state = NAS_OFF;
+        }
+      }
+      else {
+        turns_time_counter = millis();
       }
       break;
     case NAS_TURNS_ON_ERR:
