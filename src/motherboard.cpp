@@ -1,4 +1,3 @@
-#include "time.h"
 #include "motherboard.h"
 
 static bool is_btn_pressed;
@@ -14,20 +13,20 @@ void mb_btn_down() {
   is_btn_pressed = true;
 }
 void press_mb_btn(uint32_t press_ms, uint32_t wait_ms){
-  static uint32_t time = millis();
+  static uint32_t time_counter = millis();
   if( is_btn_pressed ) {
-    if( is_time_end( press_ms, time, millis()) ) {
+    if( is_time_end( press_ms, time_counter, millis()) ) {
       mb_btn_up();
-      time = millis();
+      time_counter = millis();
     }
     else {
       mb_btn_down();
     }
   }
   else {
-    if( is_time_end( wait_ms, time, millis()) ) {
+    if( is_time_end( wait_ms, time_counter, millis()) ) {
       mb_btn_down();
-      time = millis();
+      time_counter = millis();
     }
     else {
       mb_btn_up();
@@ -69,7 +68,7 @@ bool is_mb_led() {
 
 uint8_t get_mb_status(bool is_need_on){
   static uint8_t mb_state = MB_START;
-  static uint32_t time = millis();
+  static uint32_t time_counter = millis();
   switch (mb_state) {
     case MB_START:
     case MB_ON:
@@ -79,13 +78,13 @@ uint8_t get_mb_status(bool is_need_on){
           mb_state = MB_ON;
         }
         else {
-          time = millis();
+          time_counter = millis();
           mb_state = MB_TURNS_OFF;
         }
       }
       else {
         if( is_need_on ) {
-          time = millis();
+          time_counter = millis();
           mb_state = MB_TURNS_ON;
         }
         else {
@@ -94,7 +93,7 @@ uint8_t get_mb_status(bool is_need_on){
       }
       break;
     case MB_TURNS_ON:
-      if ( is_time_end( MB_TURNS_ON_ERR_TIME, time, millis()) ) {
+      if ( is_time_end( MB_TURNS_ON_ERR_TIME, time_counter, millis()) ) {
         mb_state = MB_TURNS_ON_ERR;
       }
       if( is_mb_led() ) {
@@ -102,7 +101,7 @@ uint8_t get_mb_status(bool is_need_on){
       }
       break;
     case MB_TURNS_OFF:
-      if( is_time_end( MB_TURNS_OFF_ERR_TIME, time, millis()) ) {
+      if( is_time_end( MB_TURNS_OFF_ERR_TIME, time_counter, millis()) ) {
         mb_state = MB_TURNS_OFF_ERR;
       }
       if( !is_mb_led() ) {
