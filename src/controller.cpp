@@ -14,11 +14,18 @@ bool is_need_on_state(){
 
 uint8_t get_controller_status(){
   static uint8_t controller_state = CONTROLLER_START;
-  static uint32_t time = millis();
   switch (controller_state) {
     case CONTROLLER_START:
-    case CONTROLLER_ON:
     case CONTROLLER_OFF:
+      if( is_need_on ){
+        controller_state = CONTROLLER_TURNS_ON;
+      }
+      break;
+    case CONTROLLER_ON:
+      if( !is_need_on ) {
+        controller_state = CONTROLLER_TURNS_OFF;
+      }
+      break;
     case CONTROLLER_TURNS_ON:
     case CONTROLLER_TURNS_OFF:
       if( is_need_on ) {
@@ -49,6 +56,9 @@ uint8_t get_controller_status(){
     default:
       controller_state = CONTROLLER_HZ;
       break;
+  }
+  if( !is_power_all() ){
+    controller_state = CONTROLLER_OFF;
   }
   return controller_state;
 }

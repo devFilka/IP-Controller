@@ -8,6 +8,7 @@
 #include "motherboard.h"
 #include "switch.h"
 #include "nas.h"
+#include "power.h"
 
 /* Controller constants */
 #define POWER_OFF_PIN 22
