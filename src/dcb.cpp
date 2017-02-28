@@ -179,12 +179,6 @@ void led_blink(Led *led){
         led->blink_state = BLINK_STATE_BLINK;
       }
       break;
-      /*
-      else {
-        led_off(led);
-        break;
-      }
-      */
     default:
       break;
 
