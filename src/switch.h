@@ -18,12 +18,15 @@
 #define SWITCH_START 0
 #define SWITCH_ON 1
 #define SWITCH_OFF 2
+#define SWITCH_TURNS_ON 3
+#define SWITCH_TURNS_OFF 4
 #define SWITCH_HZ 100
 
 /* Switch functions */
 void switch_relay_on();
 void switch_relay_off();
 bool switch_reset(uint32_t reset_delay);
+void switch_reset();
 
 uint8_t get_switch_status(bool is_need_on);
 
