@@ -4,12 +4,12 @@ static bool is_btn_pressed;
 
 void mb_btn_up() {
   pinMode( MB_BTN, OUTPUT );
-  digitalWrite( MB_BTN, HIGH );
+  digitalWrite( MB_BTN, LOW );
   is_btn_pressed = false;
 }
 void mb_btn_down() {
   pinMode( MB_BTN, OUTPUT );
-  digitalWrite( MB_BTN, LOW );
+  digitalWrite( MB_BTN, HIGH );
   is_btn_pressed = true;
 }
 void press_mb_btn(uint32_t press_ms, uint32_t wait_ms){
