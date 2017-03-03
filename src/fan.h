@@ -9,8 +9,8 @@
 #define FAN_2_PIN 13
 
 /* Fan constants */
-#define MIN_FAN_PWM 255
-#define MAX_FAN_PWM 0
+#define MIN_FAN_PWM 0
+#define MAX_FAN_PWM 255
 
 /* Fan functions */
 void set_fans( uint8_t percent );

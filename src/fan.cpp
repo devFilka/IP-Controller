@@ -10,12 +10,12 @@ void set_fans( uint8_t percent ){
 void fans_max(){
   pinMode(FAN_1_PIN, OUTPUT);
   pinMode(FAN_2_PIN, OUTPUT);
-  digitalWrite(FAN_1_PIN, LOW);
-  digitalWrite(FAN_2_PIN, LOW);
+  digitalWrite(FAN_1_PIN, HIGH);
+  digitalWrite(FAN_2_PIN, HIGH);
 }
 void fans_off(){
   pinMode(FAN_1_PIN, OUTPUT);
   pinMode(FAN_2_PIN, OUTPUT);
-  digitalWrite(FAN_1_PIN, HIGH);
-  digitalWrite(FAN_2_PIN, HIGH);
+  digitalWrite(FAN_1_PIN, LOW);
+  digitalWrite(FAN_2_PIN, LOW);
 }
