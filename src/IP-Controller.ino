@@ -11,7 +11,11 @@
 #include "switch.h"
 #include "controller.h"
 
-#include "ascii.h"
+//#include "uart.h"
+
+//#include "ascii.h"
+
+#define DEBUG true
 
 /* states */
 bool is_voltage_norm = false;
@@ -54,11 +58,13 @@ void do_leds(){
   do_led(&L3);
 }
 void show_current_state(uint8_t msg){
-  if( !is_some_error ){
-    if( is_stack_clear(&L1) ) {
-      add_msg(&L1, msg);
-      L1.color = GREEN_COLOR;
-      L1.state = LED_STATE_SHOW_MSG;
+  if (DEBUG) {
+    if( !is_some_error ){
+      if( is_stack_clear(&L1) ) {
+        add_msg(&L1, msg);
+        L1.color = GREEN_COLOR;
+        L1.state = LED_STATE_SHOW_MSG;
+      }
     }
   }
 }
@@ -128,7 +134,17 @@ bool check_i2c(){
 
 uint32_t critical_halt_time_counter;
 
+char incByte = 0;
 void setup(){
+  pinMode( 0, OUTPUT);
+  pinMode( 1, OUTPUT);
+  pinMode(14, OUTPUT);
+  pinMode(15, OUTPUT);
+  pinMode(16, OUTPUT);
+  pinMode(17, OUTPUT);
+  pinMode(18, OUTPUT);
+  pinMode(19, OUTPUT);
+
   battery_off();
   power_off();
   controller_off();
@@ -140,13 +156,11 @@ void setup(){
   setup_spi();
   setup_time();
 
-  Serial.begin(115200);
-  Serial1.begin(115200);
-  Serial2.begin(115200);
-  Serial3.begin(115200);
-
   led_on_with_color(&L3, RED_COLOR);
   show_current_state(0x00);
+
+  //uart_init();
+  //OUT_UART.println("HELLO");
 }
 
 #define HALT_STATE_NO_HALT 0
@@ -292,7 +306,24 @@ void loop(){
     default:
       break;
   }
-
+/*
+  switch( get_uart_status() ) {
+    case UART_INIT:
+      uart_init();
+      break;
+    case UART_NAS:
+      do_uart(&NAS_UART);
+      break;
+    case UART_SW:
+      do_uart(&SW_UART);
+      break;
+    case UART_MB:
+      do_uart(&MB_UART);
+      break;
+    default:
+      break;
+  }
+*/
   get_voltage_res();
 
   do_controller();
@@ -301,6 +332,7 @@ void loop(){
   show_controller_error();
 
   check_i2c();
+
 
   if( is_button_pressed(&S2) ){
     if( is_time_end(10000, critical_halt_time_counter, millis())){
