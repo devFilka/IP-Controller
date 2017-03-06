@@ -51,12 +51,11 @@ const String uart_usage_msg = "\rUSAGE :\r\
 /* UART functions */
 void clear_uart(UARTClass *uart);
 void uart_usage();
-bool uart_init();
+void uart_init();
 bool uart_connect( UARTClass *uart, uint32_t speed,  UARTClass::UARTModes config );
 void do_uart(UARTClass *uart);
 uint8_t get_cmd(String x);
 String read_uart_command();
 uint8_t get_uart_status();
-void do_uart_command(uint8_t cmd);
 
 #endif
