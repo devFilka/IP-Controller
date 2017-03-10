@@ -134,8 +134,13 @@ bool check_i2c(){
   static uint32_t i2c_reset_time_counter = 0;
   static uint32_t err_time_counter = 0;
 
+  if( !is_i2c_error(0x20) ){
+    set_is_dcb_i2c_err(false);
+  }
+
   if( i2c_hard_reset){
     if( is_time_end(20000, i2c_reset_time_counter, millis()) ){
+      set_is_dcb_i2c_err(false);
       i2c_hard_reset = false;
       dacb_i2c_on();
       Wire.begin();
