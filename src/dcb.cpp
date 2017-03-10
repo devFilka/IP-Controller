@@ -25,6 +25,8 @@ bool is_time_end(uint32_t t, uint32_t begin, uint32_t end) {
 }
 
 void setup_dcb() {
+  dacb_i2c_on();
+
   DCB.begin(DACB_I2C_ADDRESS);
 
   DCB.pinMode(S1_PIN, INPUT_PULLUP);
@@ -44,6 +46,10 @@ void setup_dcb() {
   DCB.digitalWrite(L3_GRN_PIN, HIGH);
   DCB.pinMode(L3_RED_PIN, OUTPUT);
   DCB.digitalWrite(L3_RED_PIN, HIGH);
+}
+
+bool is_dcb_i2c_err(){
+  return DCB.i2c_err;
 }
 
 /* led functions */
@@ -248,4 +254,14 @@ bool is_button_pressed(Button *btn){
     }
   }
   return state;
+}
+
+/* reset i2c */
+void dacb_i2c_off(){
+  pinMode(I2C_RESET_PIN, OUTPUT);
+  digitalWrite(I2C_RESET_PIN, LOW);
+}
+void dacb_i2c_on(){
+  pinMode(I2C_RESET_PIN, OUTPUT);
+  digitalWrite(I2C_RESET_PIN, HIGH);
 }

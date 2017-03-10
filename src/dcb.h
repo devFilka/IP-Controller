@@ -13,6 +13,13 @@
 /* OUTF8574 defines */
 #define DACB_I2C_ADDRESS    0x20  // Define I2C Address for the PCF8574AT
 
+/* I2C RESET */
+#define I2C_RESET_PIN 62
+#define I2C_RESET_DELAY 20000
+
+void dacb_i2c_off();
+void dacb_i2c_on();
+
 /* OUTF8574 pinout */
 #define S1_PIN     0
 #define S2_PIN     1
@@ -89,6 +96,7 @@ void led_show_msg(Led *led);
 void led_blink(Led *led);
 void led_blink_one(Led *led);
 void do_led(Led *led);
+bool is_dcb_i2c_err();
 
 /* button constatns */
 #define BTN_STACK_SIZE 50
