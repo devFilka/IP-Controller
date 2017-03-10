@@ -20,6 +20,9 @@
 void dacb_i2c_off();
 void dacb_i2c_on();
 
+bool is_dcb_i2c_err();
+void set_is_dcb_i2c_err(bool b);
+
 /* OUTF8574 pinout */
 #define S1_PIN     0
 #define S2_PIN     1

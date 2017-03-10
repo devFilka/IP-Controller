@@ -51,6 +51,9 @@ void setup_dcb() {
 bool is_dcb_i2c_err(){
   return DCB.i2c_err;
 }
+void set_is_dcb_i2c_err(bool b){
+  DCB.i2c_err = b;
+}
 
 /* led functions */
 void led_off(Led *led){
