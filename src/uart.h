@@ -6,6 +6,7 @@
 
 /* includes */
 #include "ascii.h"
+#include "controller.h"
 
 /* UART defines */
 #define OUT_UART Serial
@@ -49,11 +50,11 @@ const String uart_usage_msg = "\rUSAGE :\r\
 #define CMD_NULL 200
 
 /* UART functions */
-void clear_uart(UARTClass *uart);
+void clear_uart(USARTClass *uart);
 void uart_usage();
 void uart_init();
-bool uart_connect( UARTClass *uart, uint32_t speed,  UARTClass::UARTModes config );
-void do_uart(UARTClass *uart);
+bool uart_connect( USARTClass *uart, uint32_t speed );
+void do_uart(USARTClass *uart);
 uint8_t get_cmd(String x);
 String read_uart_command();
 uint8_t get_uart_status();

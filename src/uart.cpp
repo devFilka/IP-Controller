@@ -1,5 +1,7 @@
 #include "uart.h"
 
+uint8_t uart_status = UART_START;
+
 void clear_uart(UARTClass *uart) {
   uart->write(ESC);   // ESC
   uart->print("[2J"); // clear screen
@@ -15,26 +17,29 @@ void uart_init() {
   OUT_UART.begin(OUT_UART_SPEED, OUT_UART_PARITY);
   uart_usage();
 }
-bool uart_connect( UARTClass *uart, uint32_t speed = 115200,  UARTClass::UARTModes config = SERIAL_8N1 ) {
-  uart->begin(speed, config);
+bool uart_connect( USARTClass *uart, uint32_t speed = 115200 ) {
+  uart->begin(speed);
+  uart->println("");
   clear_uart(&OUT_UART);
   OUT_UART.print("\rConnected\r");
 }
-void uart_disconnect(UARTClass *uart) {
+void uart_disconnect(USARTClass *uart) {
   uart->end();
   clear_uart(&OUT_UART);
   OUT_UART.print("\rConnection closed\r");
+  OUT_UART.print(uart_usage_msg);
 }
-void do_uart(UARTClass *uart) {
+void do_uart(USARTClass *uart) {
+  static char inc_byte = 0;
+  static char rec_byte = 0;
+
   static bool is_first_connected = true;
   if ( is_first_connected ) {
     is_first_connected = false;
     uart_connect(uart);
   }
   else {
-    static char inc_byte = 0;
-    static char rec_byte = 0;
-    if( inc_byte != EOT ) {
+    if( rec_byte != EOT ) {
       if( uart->available() > 0 ) {
         inc_byte = uart->read();
         OUT_UART.print(inc_byte);
@@ -45,7 +50,9 @@ void do_uart(UARTClass *uart) {
       }
     }
     else {
+      rec_byte = 0;
       is_first_connected = true;
+      uart_status = UART_READ_CMD;
       uart_disconnect(uart);
     }
   }
@@ -57,6 +64,7 @@ uint8_t get_cmd(String x) {
   }
   else {
     String cmd = x.substring(0, x.length() - 1);
+    cmd.toUpperCase();
     if (cmd == "HELP") {
       uart_usage();
       return CMD_HELP;
@@ -69,6 +77,20 @@ uint8_t get_cmd(String x) {
     }
     else if (cmd == "SW") {
       return CMD_SW;
+    }
+    else if (cmd == "ON") {
+      OUT_UART.println("Controller on!");
+      battery_on();
+      power_on();
+      controller_on();
+      return CMD_ERR;
+    }
+    else if (cmd == "OFF") {
+      OUT_UART.println("Controller off!");
+      battery_off();
+      power_off();
+      controller_off();
+      return CMD_ERR;
     }
     else {
       OUT_UART.print("\r[ ERROR ]: unknown command - \"" + cmd + "\"\r");
@@ -89,14 +111,14 @@ String read_uart_command() {
     return("");
   }
   else {
-    inc_byte = 0;
     return_command = out_command;
     out_command = "";
+    inc_byte = 0;
     return(return_command);
   }
 }
 uint8_t get_uart_status() {
-  static uint8_t uart_status = UART_START;
+  //static uint8_t uart_status = UART_START;
 
   switch (uart_status) {
     case UART_START:
@@ -110,10 +132,13 @@ uint8_t get_uart_status() {
       switch ( get_cmd( read_uart_command() ) ) {
         case CMD_MB:
           uart_status = UART_MB;
+          break;
         case CMD_NAS:
           uart_status = UART_NAS;
+          break;
         case CMD_SW:
           uart_status = UART_SW;
+          break;
         default:
           break;
       }
