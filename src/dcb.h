@@ -99,7 +99,7 @@ void do_led(Led *led);
 bool is_dcb_i2c_err();
 
 /* button constatns */
-#define BTN_STACK_SIZE 50
+#define BTN_STACK_SIZE 20
 
 /* button struct */
 struct Button {
