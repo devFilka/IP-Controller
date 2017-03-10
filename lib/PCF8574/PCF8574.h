@@ -52,6 +52,8 @@
  */
 class PCF8574 {
 public:
+	uint32_t i2c_time_counter;
+	bool i2c_err = false;
 	/**
 	 * Create a new PCF8574 instance
 	 */

@@ -18,9 +18,12 @@
 /* Dependencies */
 #include <Wire.h>
 #include "PCF8574.h"
+#include "../../src/time.h"
 #ifdef PCF8574_INTERRUPT_SUPPORT
 #include "PCint.h"
 #endif
+
+#define print_dbg(s) Serial.println(s); Serial.flush();
 
 PCF8574::PCF8574() :
 		_PORT(0), _PIN(0), _DDR(0), _address(0)
@@ -231,7 +234,7 @@ void PCF8574::checkForInterrupt() {
 			break;
 		}
 	}
-	
+
 	/* Turn off ISR ignore flag */
 	_isrIgnore = 0;
 }
@@ -260,8 +263,15 @@ void PCF8574::readGPIO() {
 
 	/* Start request, wait for data and receive GPIO values as byte */
 	Wire.requestFrom(_address, (uint8_t) 0x01);
-	while (Wire.available() < 1)
-		;
+
+	i2c_time_counter = millis();
+	while ( Wire.available() < 1 ) {
+		if( is_time_end(100, i2c_time_counter, millis())){
+			//print_dbg("I2C err");
+			i2c_err = true;
+			return;
+		}
+	}
 	_PIN = I2CREAD();
 }
 
