@@ -266,10 +266,13 @@ void PCF8574::readGPIO() {
 
 	i2c_time_counter = millis();
 	while ( Wire.available() < 1 ) {
-		if( is_time_end(100, i2c_time_counter, millis())){
-			//print_dbg("I2C err");
+		if( is_time_end(300, i2c_time_counter, millis())){
+			print_dbg("I2C err");
 			i2c_err = true;
 			return;
+		}
+		else {
+			i2c_err = false;
 		}
 	}
 	_PIN = I2CREAD();
