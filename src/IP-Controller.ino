@@ -134,27 +134,42 @@ bool check_i2c(){
   static uint32_t i2c_reset_time_counter = 0;
   static uint32_t err_time_counter = 0;
 
-  if( is_time_end(1000, err_time_counter, millis())){
-    err_counter = 0;
-  }
   if( i2c_hard_reset){
-    if( is_time_end(I2C_RESET_DELAY, i2c_reset_time_counter, millis()) ){
+    if( is_time_end(20000, i2c_reset_time_counter, millis()) ){
       i2c_hard_reset = false;
       dacb_i2c_on();
-    }
-  }
-  else if( is_dcb_i2c_err() ) {
-    if ( (err_counter ++) > 3 ){
-      err_counter = 0;
-      i2c_hard_reset = true;
-      dacb_i2c_off();
-      i2c_reset_time_counter = millis();
-    }
-    else {
-      err_time_counter = millis();
       Wire.begin();
       setup_dcb();
+      i2c_reset_time_counter = millis();
     }
+  }
+  //else if( is_dcb_i2c_err() || is_i2c_error(0x20) ) {
+  else if( is_dcb_i2c_err() ) {
+    if ( err_counter > 10 ){
+      if( is_time_end(5000, i2c_reset_time_counter, millis()) ){
+        print_dbg("i2c hard reset");
+        err_counter = 0;
+        i2c_hard_reset = true;
+        dacb_i2c_off();
+        i2c_reset_time_counter = millis();
+      }
+    }
+    else {
+      if( is_time_end(1000, err_time_counter, millis()) ){
+        err_counter ++;
+        print_dbg("i2c reset");
+        err_time_counter = millis();
+        i2c_reset_time_counter = millis();
+        Wire.begin();
+        setup_dcb();
+      }
+    }
+  }
+  else {
+    err_counter = 0;
+    i2c_hard_reset = false;
+    err_time_counter = millis();
+    i2c_reset_time_counter = millis();
   }
   /*
   else if( is_i2c_error(0x20) || is_i2c_error(0x68) ){
@@ -239,6 +254,7 @@ void startTimer(Tc *tc, uint32_t channel, IRQn_Type irq, uint32_t frequency) {
 }
 
 void setup(){
+  Wire.setClock(31000L);
 
   battery_off();
   power_off();
@@ -283,7 +299,7 @@ void loop(){
     }
     is_voltage_norm = false;
   }
-  print_dbg("0");
+  //print_dbg("0");
 
   if( is_time_ok() ){
     is_battery_time_ok = true;
@@ -293,7 +309,7 @@ void loop(){
     is_battery_time_ok = false;
     led_blink(&L2_battery, RED_COLOR, 100, 3000, false);
   }
-  print_dbg("1");
+  //print_dbg("1");
 
   switch ( get_controller_status() ){
     case CONTROLLER_OFF:
@@ -352,7 +368,7 @@ void loop(){
     default:
       break;
   }
-  print_dbg("2");
+  //print_dbg("2");
 
   switch(halt_state){
     case HALT_STATE_NO_HALT:
@@ -397,7 +413,7 @@ void loop(){
     default:
       break;
   }
-  print_dbg("3");
+  //print_dbg("3");
 
   switch( get_uart_status() ) {
     case UART_INIT:
@@ -415,22 +431,22 @@ void loop(){
     default:
       break;
   }
-  print_dbg("4");
+  //print_dbg("4");
 
   get_voltage_res();
-  print_dbg("5");
+  //print_dbg("5");
 
   do_controller();
-  print_dbg("6");
+  //print_dbg("6");
 
   do_leds();
-  print_dbg("7");
+  //print_dbg("7");
 
   show_controller_error();
-  print_dbg("8");
+  //print_dbg("8");
 
   check_i2c();
-  print_dbg("9");
+  //print_dbg("9");
 
 
   if( is_button_pressed(&S2) ){
@@ -443,7 +459,7 @@ void loop(){
   else {
     critical_halt_time_counter = millis();
   }
-  print_dbg("10");
+  //print_dbg("10");
 
 /*
   static bool led = false;
